@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "monitor:health": "node scripts/monitor.js https://mern-chat-backend-nqem.onrender.com health",
+    "monitor:metrics": "node scripts/monitor.js https://mern-chat-backend-nqem.onrender.com metrics",
+    "monitor:all": "node scripts/monitor.js https://mern-chat-backend-nqem.onrender.com all"
   },
   "keywords": [],
   "author": "",

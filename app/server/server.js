@@ -235,6 +235,58 @@ io.on('connection', (socket) => {
   });
 });
 
+// Enhanced health check for in-memory storage
+app.get('/api/health', (req, res) => {
+  const healthData = {
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    memory: {
+      rss: Math.round(process.memoryUsage().rss / 1024 / 1024 * 100) / 100 + ' MB',
+      heapTotal: Math.round(process.memoryUsage().heapTotal / 1024 / 1024 * 100) / 100 + ' MB',
+      heapUsed: Math.round(process.memoryUsage().heapUsed / 1024 / 1024 * 100) / 100 + ' MB',
+    },
+    storage: {
+      type: 'in-memory',
+      users: Object.keys(users).length,
+      messages: messages.length,
+      rooms: rooms.length,
+      privateMessages: privateMessages.size
+    },
+    environment: process.env.NODE_ENV || 'development'
+  };
+  
+  res.json(healthData);
+});
+
+// Enhanced metrics endpoint
+app.get('/api/metrics', (req, res) => {
+  const metrics = {
+    connections: {
+      total: Object.keys(users).length,
+      online: Object.values(users).filter(u => u.isOnline).length
+    },
+    messages: {
+      total: messages.length,
+      lastHour: messages.filter(m => {
+        const messageTime = new Date(m.timestamp);
+        const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+        return messageTime > oneHourAgo;
+      }).length
+    },
+    rooms: {
+      total: rooms.length,
+      active: Array.from(new Set(messages.slice(-100).map(m => m.room))).length
+    },
+    performance: {
+      uptime: process.uptime(),
+      memory: process.memoryUsage()
+    }
+  };
+  
+  res.json(metrics);
+});
+
 // Enhanced API routes
 app.get('/api/messages', (req, res) => {
   const { room, limit = 100, offset = 0 } = req.query;

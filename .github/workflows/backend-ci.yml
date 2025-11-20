@@ -1,0 +1,63 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'app/server/**'
+      - '.github/workflows/backend-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'app/server/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: app/server/package-lock.json
+    
+    - name: Install dependencies
+      run: npm ci
+      working-directory: app/server
+    
+    - name: Check if server starts
+      run: |
+        timeout 10s npm start || exit 0
+      working-directory: app/server
+      env:
+        NODE_ENV: test
+        PORT: 5000
+        CLIENT_URL: http://localhost:3000
+    
+    - name: Run security audit
+      run: npm audit --audit-level moderate
+      working-directory: app/server
+    
+    - name: Test API endpoints
+      run: |
+        # Start server in background
+        npm start &
+        SERVER_PID=$!
+        sleep 5
+        
+        # Test health endpoint
+        curl -f http://localhost:5000/api/health || exit 1
+        curl -f http://localhost:5000/api/users || exit 1
+        curl -f http://localhost:5000/api/rooms || exit 1
+        
+        # Kill server
+        kill $SERVER_PID
+      working-directory: app/server

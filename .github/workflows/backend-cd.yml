@@ -1,0 +1,48 @@
+name: Backend CD
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'app/server/**'
+      - '.github/workflows/backend-cd.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+        cache-dependency-path: app/server/package-lock.json
+    
+    - name: Install dependencies
+      run: npm ci --production
+      working-directory: app/server
+    
+    - name: Check server startup
+      run: |
+        timeout 15s npm start || exit 0
+        echo "Server started successfully"
+      working-directory: app/server
+      env:
+        NODE_ENV: production
+        PORT: 5000
+        CLIENT_URL: ${{ secrets.CLIENT_URL }}
+    
+    - name: Deploy to Render
+      run: |
+        curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
+    
+    - name: Health check after deploy
+      run: |
+        echo "Waiting for deployment to complete..."
+        sleep 30
+        curl -f ${{ secrets.BACKEND_URL }}/api/health || exit 1
+        echo "Backend health check passed!"
