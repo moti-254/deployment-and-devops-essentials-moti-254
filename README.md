@@ -97,16 +97,23 @@ Your work will be automatically submitted when you push to your GitHub Classroom
 - ✅ Environment variables configured
 - ✅ Production build successfully created
 
-### 📋 Current Step: Step 3 - Backend Deployment to Render
+**Step 3: Backend Deployment to Render** ✅
+- ✅ Backend successfully deployed to Render
+- ✅ URL: https://mern-chat-backend-nqem.onrender.com
+- ✅ Socket.io server running
+- ✅ Monitoring and logs accessible
 
-**To Deploy Backend:**
-1. Read `RENDER_QUICK_START.md` for 5-minute setup
-2. Or read `RENDER_DEPLOYMENT_GUIDE.md` for detailed instructions
-3. Connect GitHub repository to Render
-4. Set environment variables (MongoDB URI, JWT secret, etc.)
-5. Deploy!
+### 📋 Current Step: Step 4 - Frontend Deployment to Vercel
 
-**Expected Outcome:** Backend running at `https://your-service.onrender.com`
+**To Deploy Frontend:**
+1. Read `VERCEL_QUICK_START.md` for 5-minute setup
+2. Or read `VERCEL_DEPLOYMENT_GUIDE.md` for detailed instructions
+3. Connect GitHub repository to Vercel
+4. Set root directory to `app/client`
+5. Add environment variable: `VITE_SOCKET_URL=https://mern-chat-backend-nqem.onrender.com`
+6. Deploy!
+
+**Expected Outcome:** Frontend running at `https://your-frontend.vercel.app`
 
 ### 🔄 Next Steps
 
@@ -120,5 +127,5 @@ Your work will be automatically submitted when you push to your GitHub Classroom
 
 *Update these after deploying:*
 
-- **Backend API:** (To be deployed to Render)
+- **Backend API:** https://mern-chat-backend-nqem.onrender.com ✅ (Deployed to Render)
 - **Frontend App:** (To be deployed to Vercel)
