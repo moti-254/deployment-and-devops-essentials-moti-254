@@ -1,0 +1,49 @@
+.message-input-form {
+  padding: 1rem;
+  background-color: #2d2d2d;
+  border-top: 1px solid #404040;
+}
+
+.input-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.input-container textarea {
+  flex: 1;
+  background-color: #404040;
+  border: 1px solid #525252;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: #ffffff;
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.input-container textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+.input-container button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.input-container button:disabled {
+  background-color: #6b7280;
+  cursor: not-allowed;
+}
+
+.input-container button:hover:not(:disabled) {
+  background-color: #2563eb;
+}

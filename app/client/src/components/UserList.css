@@ -1,0 +1,62 @@
+.user-list {
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.user-list h3 {
+  color: #e5e7eb;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.user-item:hover {
+  background-color: #2d2d2d;
+}
+
+.user-item.current-user {
+  background-color: #3b82f6;
+}
+
+.user-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10b981;
+}
+
+.user-item.current-user .user-status {
+  background-color: #ffffff;
+}
+
+.username {
+  flex: 1;
+  color: #e5e7eb;
+  font-size: 0.875rem;
+}
+
+.you-badge {
+  background-color: #1e40af;
+  color: white;
+  padding: 0.125rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
