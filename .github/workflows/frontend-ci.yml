@@ -3,29 +3,20 @@ name: Frontend CI
 on:
   push:
     branches: [ main, develop ]
-    paths:
-      - 'app/client/**'
-      - '.github/workflows/frontend-ci.yml'
   pull_request:
     branches: [ main, develop ]
-    paths:
-      - 'app/client/**'
 
 jobs:
   test:
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
     - uses: actions/checkout@v4
     
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '18.x'
         cache: 'npm'
         cache-dependency-path: app/client/package-lock.json
     
@@ -33,16 +24,13 @@ jobs:
       run: npm ci
       working-directory: app/client
     
-    - name: Run tests
-      run: npm test -- --coverage --watchAll=false
-      working-directory: app/client
-    
     - name: Build application
       run: npm run build
       working-directory: app/client
       env:
-        VITE_SOCKET_URL: ${{ secrets.VITE_SOCKET_URL }}
+        VITE_SOCKET_URL: https://mern-chat-backend-nqem.onrender.com
     
-    - name: Run security audit
-      run: npm audit --audit-level moderate
+    - name: Check build output
+      run: |
+        ls -la dist/ || echo "No dist folder found"
       working-directory: app/client

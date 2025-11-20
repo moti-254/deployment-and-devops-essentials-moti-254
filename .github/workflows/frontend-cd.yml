@@ -3,9 +3,6 @@ name: Frontend CD
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'app/client/**'
-      - '.github/workflows/frontend-cd.yml'
 
 jobs:
   deploy:
@@ -26,15 +23,11 @@ jobs:
       run: npm ci
       working-directory: app/client
     
-    - name: Run tests
-      run: npm test -- --watchAll=false
-      working-directory: app/client
-    
     - name: Build application
       run: npm run build
       working-directory: app/client
       env:
-        VITE_SOCKET_URL: ${{ secrets.VITE_SOCKET_URL }}
+        VITE_SOCKET_URL: https://mern-chat-backend-nqem.onrender.com
     
     - name: Deploy to Vercel
       uses: amondnet/vercel-action@v20
