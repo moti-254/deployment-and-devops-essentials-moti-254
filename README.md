@@ -127,5 +127,71 @@ Your work will be automatically submitted when you push to your GitHub Classroom
 
 *Update these after deploying:*
 
+
+## 🚀 Deployment Status
+
+### ✅ Completed
+- [x] Backend deployed to Render
+- [x] MongoDB Atlas configured (optional)
+- [x] CI/CD pipelines set up with GitHub Actions
+- [x] Backend CI/CD workflows passing
+- [x] Health monitoring endpoints implemented
+- [x] Production optimization completed
+
+### 🔄 In Progress
+- [ ] Frontend deployment to Vercel
+- [ ] Frontend CI/CD workflows configuration
+
+### ❌ Pending
+- [ ] Frontend URL integration
+- [ ] Final end-to-end testing
+
+## 🔧 CI/CD Pipeline
+
+### GitHub Actions Workflows
+
+| Workflow | Status | Purpose |
+|----------|--------|---------|
+| Backend CI | ✅ Passing | Test backend on push/PR |
+| Backend CD | ✅ Passing | Auto-deploy to Render |
+| Frontend CI | ❌ Failing | Test frontend on push/PR |
+| Frontend CD | ❌ Failing | Auto-deploy to Vercel |
+
+### Pipeline Features
+- Automated testing on push to main/develop branches
+- Automatic deployment to production on main branch merges
+- Security audits and dependency checks
+- Health checks after deployment
+
+## 📊 Monitoring & Health
+
+The application includes comprehensive monitoring:
+
+### Health Endpoints
+- `GET /api/health` - Application health status
+- `GET /api/metrics` - Performance metrics
+
+### Health Check Response Example
+```json
+{
+  "status": "OK",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "uptime": 123.45,
+  "memory": {
+    "rss": "45.23 MB",
+    "heapTotal": "12.34 MB",
+    "heapUsed": "8.76 MB"
+  },
+  "storage": {
+    "type": "in-memory",
+    "users": 0,
+    "messages": 0,
+    "rooms": 4,
+    "privateMessages": 0
+  },
+  "environment": "production"
+}
+
 - **Backend API:** https://mern-chat-backend-nqem.onrender.com ✅ (Deployed to Render)
-- **Frontend App:** (To be deployed to Vercel)
+- **Frontend App:**  https://mern-chat-frontend-one.vercel.app
+
